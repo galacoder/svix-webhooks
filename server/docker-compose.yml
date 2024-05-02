@@ -24,6 +24,8 @@ services:
 
   pgbouncer:
     image: "docker.io/edoburu/pgbouncer:1.15.0"
+    ports:
+      - "8079:5432" # Needed for sqlx
     healthcheck:
       test: "pg_isready -h localhost"
       interval: 30s
@@ -43,6 +45,9 @@ services:
     command: "--save 60 500 --appendonly yes --appendfsync everysec"
     volumes:
       - "redis-data:/data"
+    ports:
+      - "8078:6379" # Needed for sqlx
+
 
 volumes:
   postgres-data:
